@@ -1,38 +1,37 @@
-USE alx_book_store;
-
-CREATE TABLE AUTHORS (
-    author_id INT AUTO_INCREMENT PRIMARY KEY,
-    author_name VARCHAR(215)
+CREATE TABLE Authors (
+    AuthorID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Bio TEXT
 );
 
-CREATE TABLE BOOKS (
-    book_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(130),
-    author_id INT,
-    price DOUBLE,
-    publication_date DATE,
-    FOREIGN KEY (author_id) REFERENCES AUTHORS(author_id)
+CREATE TABLE Books (
+    BookID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    AuthorID INT,
+    PublishedYear YEAR,
+    Price DECIMAL(10,2),
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
 );
 
-CREATE TABLE CUSTOMERS (
-    customer_id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_name VARCHAR(215),
-    email VARCHAR(215),
-    address TEXT
+CREATE TABLE Customers (
+    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL,
+    Phone VARCHAR(20)
 );
 
-CREATE TABLE ORDERS (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT,
-    order_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES CUSTOMERS(customer_id)
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
 
-CREATE TABLE ORDER_DETAILS (
-    orderdetailid INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT,
-    book_id INT,
-    quantity DOUBLE,
-    FOREIGN KEY (order_id) REFERENCES ORDERS(order_id),
-    FOREIGN KEY (book_id) REFERENCES BOOKS(book_id)
+CREATE TABLE Order_Details (
+    OrderDetailID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT,
+    BookID INT,
+    Quantity INT,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
 );
